@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "painting_tutor"
+# "segment-anything@git+https://github.com/facebookresearch/segment-anything",
+
+dependencies = [
+    "segment-anything",
+    "supervision==0.20.0",
+    "matplotlib",
+    "scikit-learn",
+    "streamlit",
+    "python-dotenv",
+]
+requires-python = ">=3.11"
+authors = [
+    {name = "Yke"},
+]
+description = "Painting tutor"
+readme = "README.md"
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel==6.29.3",
+    "pytest==8.1.1",
+    "pre-commit==3.6.2",
+]
+
+[project.scripts]
+your-cli-command = "example.source:main"
+
+[tool.ruff]
+line-length = 100
+lint.select = ["I"]
+src = ["src"]
+
+[tool.black]
+line-length = 100
