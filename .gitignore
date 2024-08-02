@@ -14,6 +14,8 @@
 *.tax2010
 *.vcf
 *.xml
+*.pdf
+*.jpg
 
 ### macOS ###
 # General
@@ -300,3 +302,5 @@ $RECYCLE.BIN/
 *.html
 *.ipynb
 *_version.py
+
+*.pth
