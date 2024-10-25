@@ -22,6 +22,7 @@ def upload_image(position: DeltaGenerator) -> None:
         st.session_state["image_name"] = uploaded_file.name
         st.session_state["image_size"] = uploaded_file.size
 
+
 def process_image_button(position: DeltaGenerator) -> bool:
     if st.session_state["image_rgb"] is None:
         return False
@@ -77,8 +78,8 @@ def checkbox_black_and_white(position: DeltaGenerator) -> None:
 def checkbox_mask_only(position: DeltaGenerator) -> None:
     mask_only = position.checkbox("Show mask only", value=False)
     st.session_state["mask_only"] = mask_only
-    
-    
+
+
 def checkbox_mask_background_black(position: DeltaGenerator) -> None:
     mask_background_black = position.checkbox("Dark mask background", value=False)
     st.session_state["mask_background_black"] = mask_background_black
@@ -97,7 +98,7 @@ def select_mask_index(position: DeltaGenerator) -> None:
         value=0,
     )
     st.session_state["mask_index"] = mask_index
-    
+
 
 def checkbox_cool_mask(position: DeltaGenerator) -> None:
     show_cool_mask = position.checkbox("Show cool mask", value=False)
@@ -114,12 +115,12 @@ def show_image(position: DeltaGenerator, image, ignore_settings=False) -> None:
     if st.session_state["mask_only"] and not ignore_settings:
         mask = st.session_state["sam_masks"][st.session_state["mask_index"]]
         image = image.copy()
-        
+
         if st.session_state["mask_background_black"]:
             fill_value = 0
         else:
             fill_value = 255 if np.max(image) > 1 else 1
-        
+
         image[~mask] = fill_value
 
     position.image(image, use_column_width=True)
