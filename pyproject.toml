@@ -6,16 +6,15 @@ build-backend = "setuptools.build_meta"
 name = "painting_tutor"
 
 dependencies = [
-    "segment-anything",
-    "supervision",
-    "torch",
-    "torchvision",
-    "matplotlib",
-    "scikit-learn",
-    "streamlit",
-    "python-dotenv",
+    "segment-anything>=1.0",
+    "supervision>=0.20.0",
+    "torch>=2.3.0",
+    "torchvision>=0.18.0",
+    "matplotlib>=3.9.0",
+    "scikit-learn>=1.5.0",
+    "streamlit>=1.37.0",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.13"
 authors = [
     {name = "Yke"},
 ]

@@ -1,5 +1,4 @@
 import supervision as sv
-
 from segment_anything import SamAutomaticMaskGenerator
 
 

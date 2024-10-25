@@ -5,7 +5,6 @@ Makes use of app components defined in the `components` module.
 import streamlit as st
 
 from painting_tutor.app import components
-
 from painting_tutor.app.process import process_image
 from painting_tutor.logs import configure_logger
 from painting_tutor.model import load_model_from_local
@@ -18,13 +17,14 @@ def configure_logging():
 
 @st.cache_resource()
 def load_segmentation_model():
-     return load_model_from_local()
+    return load_model_from_local()
 
 
 def init_session_state():
     for key in ["image_rgb", "image_bgr", "sam", "sam_result", "sam_masks"]:
         if key not in st.session_state:
             st.session_state[key] = None
+
 
 st.set_page_config(
     page_title="Painting Tutor",
