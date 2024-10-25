@@ -1,16 +1,24 @@
 import os
+from typing import Literal
+
+import logging
 
 import torch
 
 from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
 
+logger = logging.getLogger(__name__)
 
-def load_model_from_local() -> SamAutomaticMaskGenerator:
-    model_name = "sam_vit_h"
-    model_dir = "model"
+
+def load_model_from_local(
+    size: Literal["big", "large", "huge"] = "huge", model_dir="model"
+) -> SamAutomaticMaskGenerator:
+    
+    logger.info(f"Loading '{size}' model from '/{model_dir}'")
+    
+    model_name = f"sam_vit_{size[0]}"
     model_type = model_name.split("sam_")[1] # vit_...
     
-
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     model_fname = [path for path in os.listdir(model_dir) if model_name in path][0]

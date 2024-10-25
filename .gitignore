@@ -304,3 +304,4 @@ $RECYCLE.BIN/
 *_version.py
 
 *.pth
+cache/
