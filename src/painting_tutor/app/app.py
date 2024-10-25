@@ -21,9 +21,10 @@ def load_segmentation_model():
 
 
 def init_session_state():
-    for key in ["image_rgb", "sam_masks"]:
-        if key not in st.session_state:
-            st.session_state[key] = None
+    if "first_run" not in st.session_state:
+        st.session_state["first_run"] = True
+        st.session_state["image_rgb"] = None
+        st.session_state["sam_masks"] = None
 
 
 st.set_page_config(
@@ -54,6 +55,8 @@ components.checkbox_mask_only(st.sidebar)
 components.checkbox_mask_background_black(st.sidebar)
 components.select_mask_index(st.sidebar)
 
+components.checkbox_cool_mask(st.sidebar)
+
 st.subheader("🖼️ Painting Tutor")
 
 if st.session_state["image_rgb"] is None:
@@ -61,16 +64,22 @@ if st.session_state["image_rgb"] is None:
     st.stop()
 
 process_image()
+if st.session_state["first_run"]:
+    st.session_state["first_run"] = False
+    st.rerun()
 
 cols = st.columns(2)
 components.show_image(cols[0], st.session_state["image_rgb"])
-components.show_image(cols[1], st.session_state["line_image"])
+components.show_image(cols[1], st.session_state["line_overlay"])
 
 components.show_image(cols[0], st.session_state["means_image"])
-components.show_image(cols[1], st.session_state["line_overlay"])
+components.show_image(cols[1], st.session_state["line_image"])
 
 components.show_image(cols[0], st.session_state["image_rgb"])
 components.show_image(cols[1], st.session_state["image_smoothed"])
 
 components.show_image(cols[0], st.session_state["kmeans_image_smoothed"])
 components.show_image(cols[1], st.session_state["kmeans_image"])
+
+if st.session_state["show_cool_mask"]:
+    components.show_image(cols[0], st.session_state["cool_mask"], ignore_settings=True)

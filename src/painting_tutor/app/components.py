@@ -97,16 +97,21 @@ def select_mask_index(position: DeltaGenerator) -> None:
         value=0,
     )
     st.session_state["mask_index"] = mask_index
+    
+
+def checkbox_cool_mask(position: DeltaGenerator) -> None:
+    show_cool_mask = position.checkbox("Show cool mask", value=False)
+    st.session_state["show_cool_mask"] = show_cool_mask
 
 
-def show_image(position: DeltaGenerator, image) -> None:
+def show_image(position: DeltaGenerator, image, ignore_settings=False) -> None:
     if image is None:
         return
 
-    if st.session_state["black_and_white"]:
+    if st.session_state["black_and_white"] and not ignore_settings:
         image = make_black_and_white(image)
 
-    if st.session_state["mask_only"]:
+    if st.session_state["mask_only"] and not ignore_settings:
         mask = st.session_state["sam_masks"][st.session_state["mask_index"]]
         image = image.copy()
         

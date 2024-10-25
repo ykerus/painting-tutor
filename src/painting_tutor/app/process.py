@@ -5,7 +5,7 @@ import pickle
 import streamlit as st
 
 from painting_tutor.edges import extract_major_lines, lines_to_image, overlay_lines
-from painting_tutor.images import create_kmeans_image, smooth_image_segments_gaussian
+from painting_tutor.images import create_kmeans_image, cut_out_mask, fill_nans_with_nearest_values, smooth_image_segments_gaussian
 from painting_tutor.segmentation import get_masks, segment_image
 
 
@@ -51,6 +51,11 @@ def create_kmeans_image_cached(masks, image, n_colors):
         image,
         n_colors=n_colors,
     )
+    
+@st.cache_data
+def fill_nans_with_nearest_values_cached(image, mask):
+    mask_cut = cut_out_mask(image, mask)
+    return fill_nans_with_nearest_values(mask_cut)
 
 
 def process_image():
@@ -92,3 +97,9 @@ def process_image():
     )
 
     st.session_state["mask"] = st.session_state["sam_masks"][st.session_state["mask_index"]]
+    
+    if st.session_state["show_cool_mask"]:
+        st.session_state["cool_mask"] = fill_nans_with_nearest_values_cached(
+            st.session_state["image_rgb"],
+            st.session_state["mask"],
+        )
