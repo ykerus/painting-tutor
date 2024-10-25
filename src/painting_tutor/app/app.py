@@ -51,6 +51,7 @@ components.select_sigma(st.sidebar)
 
 components.checkbox_black_and_white(st.sidebar)
 components.checkbox_mask_only(st.sidebar)
+components.checkbox_mask_background_black(st.sidebar)
 components.select_mask_index(st.sidebar)
 
 st.subheader("🖼️ Painting Tutor")

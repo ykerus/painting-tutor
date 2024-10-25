@@ -75,13 +75,20 @@ def checkbox_black_and_white(position: DeltaGenerator) -> None:
 
 
 def checkbox_mask_only(position: DeltaGenerator) -> None:
-    mask_only = position.checkbox("Mask only", value=False)
+    mask_only = position.checkbox("Show mask only", value=False)
     st.session_state["mask_only"] = mask_only
+    
+    
+def checkbox_mask_background_black(position: DeltaGenerator) -> None:
+    mask_background_black = position.checkbox("Dark mask background", value=False)
+    st.session_state["mask_background_black"] = mask_background_black
 
 
 def select_mask_index(position: DeltaGenerator) -> None:
     if st.session_state["sam_masks"] is None:
         max_mask_index = 10
+    else:
+        max_mask_index = len(st.session_state["sam_masks"])
 
     mask_index = position.slider(
         "Mask index",
@@ -102,7 +109,13 @@ def show_image(position: DeltaGenerator, image) -> None:
     if st.session_state["mask_only"]:
         mask = st.session_state["sam_masks"][st.session_state["mask_index"]]
         image = image.copy()
-        image[~mask] = 0
+        
+        if st.session_state["mask_background_black"]:
+            fill_value = 0
+        else:
+            fill_value = 255 if np.max(image) > 1 else 1
+        
+        image[~mask] = fill_value
 
     position.image(image, use_column_width=True)
 
