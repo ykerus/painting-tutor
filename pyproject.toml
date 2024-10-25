@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "painting_tutor"
-# "segment-anything@git+https://github.com/facebookresearch/segment-anything",
 
 dependencies = [
     "segment-anything",
-    "supervision==0.20.0",
+    "supervision",
+    "torch",
+    "torchvision",
     "matplotlib",
     "scikit-learn",
     "streamlit",
@@ -28,9 +29,6 @@ dev = [
     "pytest==8.1.1",
     "pre-commit==3.6.2",
 ]
-
-[project.scripts]
-your-cli-command = "example.source:main"
 
 [tool.ruff]
 line-length = 100
