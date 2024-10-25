@@ -1,8 +1,35 @@
-# Paining tutor
+# Paining tutor 🎨
 
-See [segmentation tutorial](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/how-to-segment-anything-with-sam.ipynb?ref=blog.roboflow.com#scrollTo=Aszw1OxBwowI)
+An app that helps you paint from pictures by bringing them down to basic lines, shapes and colors.
 
-Download models:
+## Set up 💻
+
+1. Make sure you have `uv` installed
+2. Install dependencies in virtual environment:
+
+    ```bash
+    uv sync
+    ```
+
+3. Download the model with:
+
+    ```bash
+    wget -q https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth -P model
+    ```
+
+4. Run the app, upload pictures and have fun! 🖼️
+
+    ```bash
+    uv run streamlit run src/painting_tutor/app/app.py
+    ```
+
+Tip: clean up the `cache` folder every once in a while to save disk space.
+
+## Resources 📚
+
+See [segmentation tutorial](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/how-to-segment-anything-with-sam.ipynb?ref=blog.roboflow.com#scrollTo=Aszw1OxBwowI).
+
+Other models available:
 
 ```bash
 wget -q https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth -P model
