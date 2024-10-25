@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 import pickle
 
 import streamlit as st
@@ -8,11 +10,22 @@ from painting_tutor.segmentation import get_masks, segment_image
 
 
 @st.cache_data
-def segment_image_cached(image):
-    output = segment_image(image, st.session_state["sam"])
-    pickle.dump(output, open("segment_image_2.pkl", "wb"))
+def segment_image_cached(image, cache_dir=Path("cache")):
+    
+    cache_fname = Path(st.session_state["image_name"]).stem
+    cache_fname = f'{st.session_state["image_size"]}_{cache_fname}.pkl'
+    cache_fpath = cache_dir / cache_fname
+    
+    if not os.path.exists(cache_dir):
+        os.makedirs(cache_dir)
+        
+    if os.path.exists(cache_fpath):
+        output = pickle.load(open(cache_fpath, "rb"))
+        
+    else:
+        output = segment_image(image, st.session_state["sam"])
+        pickle.dump(output, open(cache_fpath, "wb"))
 
-    # output = pickle.load(open("segment_image.pkl", "rb"))
     return output
 
 

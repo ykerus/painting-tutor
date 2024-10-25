@@ -21,7 +21,7 @@ def load_segmentation_model():
 
 
 def init_session_state():
-    for key in ["image_rgb", "image_bgr", "sam", "sam_result", "sam_masks"]:
+    for key in ["image_rgb", "sam_masks"]:
         if key not in st.session_state:
             st.session_state[key] = None
 

@@ -19,7 +19,8 @@ def upload_image(position: DeltaGenerator) -> None:
         image = cv2.imdecode(file_bytes, 1)
         st.session_state["image_bgr"] = image
         st.session_state["image_rgb"] = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
+        st.session_state["image_name"] = uploaded_file.name
+        st.session_state["image_size"] = uploaded_file.size
 
 def process_image_button(position: DeltaGenerator) -> bool:
     if st.session_state["image_rgb"] is None:
@@ -80,14 +81,14 @@ def checkbox_mask_only(position: DeltaGenerator) -> None:
 
 def select_mask_index(position: DeltaGenerator) -> None:
     if st.session_state["sam_masks"] is None:
-        mask_index = 0
-    else:
-        mask_index = position.slider(
-            "Mask index",
-            min_value=0,
-            max_value=min(10, len(st.session_state["sam_masks"])),
-            value=0,
-        )
+        max_mask_index = 10
+
+    mask_index = position.slider(
+        "Mask index",
+        min_value=0,
+        max_value=min(10, max_mask_index),
+        value=0,
+    )
     st.session_state["mask_index"] = mask_index
 
 
