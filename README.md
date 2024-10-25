@@ -2,6 +2,8 @@
 
 An app that helps you paint from pictures by bringing them down to basic lines, shapes and colors.
 
+![app](docs/app.png)
+
 ## Set up 💻
 
 1. Make sure you have `uv` installed
@@ -24,6 +26,12 @@ An app that helps you paint from pictures by bringing them down to basic lines, 
     ```
 
 Tip: clean up the `cache` folder every once in a while to save disk space.
+
+## Notes 🚨
+
+The algorithm takes averages over colors of segments in the images. These are often not the same
+colors as one would normally paint! This is because averages over many colors tend to become gray.
+Increasing the number of colors per segment or mask will get you closer to the true colors.
 
 ## Resources 📚
 
