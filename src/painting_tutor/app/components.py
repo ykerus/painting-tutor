@@ -38,10 +38,10 @@ def select_n_masks(position: DeltaGenerator) -> None:
     if st.session_state["sam_masks"] is not None:
         max_masks = len(st.session_state["sam_masks"])
     else:
-        max_masks = 10
+        max_masks = 30
 
     n_colors = position.slider(
-        "Number of masks", min_value=1, max_value=max_masks, value=min(10, max_masks)
+        "Number of masks", min_value=1, max_value=max_masks, value=min(30, max_masks)
     )
     st.session_state["n_masks"] = n_colors
 
@@ -87,14 +87,14 @@ def checkbox_mask_background_black(position: DeltaGenerator) -> None:
 
 def select_mask_index(position: DeltaGenerator) -> None:
     if st.session_state["sam_masks"] is None:
-        max_mask_index = 10
+        max_mask_index = 15
     else:
         max_mask_index = len(st.session_state["sam_masks"])
 
     mask_index = position.slider(
         "Mask index",
         min_value=0,
-        max_value=min(10, max_mask_index),
+        max_value=min(15, max_mask_index),
         value=0,
     )
     st.session_state["mask_index"] = mask_index
