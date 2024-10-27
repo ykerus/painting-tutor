@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 import cv2
 import numpy as np
@@ -27,6 +28,28 @@ def process_image_button(position: DeltaGenerator) -> bool:
     if st.session_state["image_rgb"] is None:
         return False
     return position.button("Process Image", key="process_image")
+
+def select_line_x(position: DeltaGenerator) -> None:
+    
+    if st.session_state["image_rgb"] is None:
+        max_value = 1000
+    else:
+        max_value = st.session_state["image_rgb"].shape[1]
+    
+    line_x = position.slider("Line X", min_value=0, max_value=max_value, value=0)
+    st.session_state["line_x"] = line_x
+    
+    
+def select_line_y(position: DeltaGenerator) -> None:
+    
+    if st.session_state["image_rgb"] is None:
+        max_value = 1000
+    else:
+        max_value = st.session_state["image_rgb"].shape[0]
+    
+    line_y = position.slider("Line Y", min_value=0, max_value=max_value, value=0)
+    st.session_state["line_y"] = line_y
+
 
 
 def select_n_colors(position: DeltaGenerator) -> None:
@@ -105,7 +128,13 @@ def checkbox_cool_mask(position: DeltaGenerator) -> None:
     st.session_state["show_cool_mask"] = show_cool_mask
 
 
-def show_image(position: DeltaGenerator, image, ignore_settings=False) -> None:
+def show_image(
+    position: DeltaGenerator, 
+    image,
+    ignore_settings=False, 
+    show_lines=True,
+    line_width: Optional[int] = 6,
+) -> None:
     if image is None:
         return
 
@@ -122,6 +151,15 @@ def show_image(position: DeltaGenerator, image, ignore_settings=False) -> None:
             fill_value = 255 if np.max(image) > 1 else 1
 
         image[~mask] = fill_value
+
+    line_x = st.session_state["line_x"]
+    line_y = st.session_state["line_y"]
+    if show_lines and not (line_x == 0 and line_y == 0):
+        image = image.copy()
+        if line_y != 0:
+            image[line_y-int(line_width/2):line_y+int(line_width/2), :] = 0
+        if line_x != 0:
+            image[:, line_x-int(line_width/2):line_x+int(line_width/2)] = 0
 
     position.image(image, use_column_width=True)
 

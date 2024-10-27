@@ -41,6 +41,10 @@ st.session_state["sam"] = load_segmentation_model()
 st.sidebar.header("📷 Image Upload")
 components.upload_image(st.sidebar)
 
+components.select_line_x(st.sidebar)
+components.select_line_y(st.sidebar)
+
+
 components.select_n_colors(st.sidebar)
 components.select_n_masks(st.sidebar)
 
@@ -69,6 +73,7 @@ if st.session_state["first_run"]:
     st.rerun()
 
 cols = st.columns(2)
+
 components.show_image(cols[0], st.session_state["image_rgb"])
 components.show_image(cols[1], st.session_state["line_overlay"])
 
